@@ -133,12 +133,18 @@ export default {
 			backgroundImage: {
 				'gradient-food': 'var(--gradient-food)',
 				'gradient-primary': 'var(--gradient-primary)',
-				'gradient-success': 'var(--gradient-success)'
+				'gradient-success': 'var(--gradient-success)',
+				'gradient-hero': 'var(--gradient-hero)'
 			},
 			boxShadow: {
 				'food': 'var(--shadow-food)',
 				'card': 'var(--shadow-card)',
-				'glow': 'var(--shadow-glow)'
+				'glow': 'var(--shadow-glow)',
+				'soft': 'var(--shadow-soft)'
+			},
+			spacing: {
+				'18': '4.5rem',
+				'22': '5.5rem'
 			}
 		}
 	},
