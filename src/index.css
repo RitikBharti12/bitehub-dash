@@ -17,24 +17,48 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Food delivery theme colors */
+    --primary: 25 95% 53%;
+    --primary-foreground: 0 0% 98%;
+    --primary-light: 25 95% 65%;
+    --primary-dark: 25 95% 45%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 120 60% 45%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-light: 120 60% 55%;
 
     --muted: 210 40% 96.1%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 30 100% 96%;
+    --accent-foreground: 25 95% 53%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --ring: 25 95% 53%;
+
+    /* Food app specific tokens */
+    --food-orange: 25 95% 53%;
+    --food-green: 120 60% 45%;
+    --food-red: 0 84% 60%;
+    --food-yellow: 45 93% 58%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-light)));
+    --gradient-food: linear-gradient(135deg, hsl(var(--food-orange)), hsl(var(--food-yellow)));
+    --gradient-success: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-light)));
+    
+    /* Shadows */
+    --shadow-food: 0 10px 30px -10px hsl(var(--primary) / 0.3);
+    --shadow-card: 0 4px 20px hsl(var(--primary) / 0.1);
+    --shadow-glow: 0 0 40px hsl(var(--primary) / 0.2);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --radius: 0.5rem;
 
