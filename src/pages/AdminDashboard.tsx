@@ -126,15 +126,15 @@ export default function AdminDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-background p-6">
+    <div className="min-h-screen bg-gradient-to-br from-background to-muted/20 p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Restaurant Dashboard</h1>
+            <h1 className="text-3xl font-bold text-foreground">Restaurant Dashboard</h1>
             <p className="text-muted-foreground">Manage your restaurant operations</p>
           </div>
-          <Button className="bg-primary hover:bg-primary-dark">
+          <Button className="bg-primary hover:bg-primary/90 text-white rounded-xl px-6 shadow-soft hover:shadow-food transition-all duration-300">
             <Plus className="h-4 w-4 mr-2" />
             Add Menu Item
           </Button>
@@ -143,16 +143,18 @@ export default function AdminDashboard() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat) => (
-            <Card key={stat.title}>
+            <Card key={stat.title} className="bg-white/95 backdrop-blur-md border-border/50 shadow-soft hover:shadow-food transition-all duration-300 rounded-2xl">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-muted-foreground">
                       {stat.title}
                     </p>
-                    <p className="text-2xl font-bold">{stat.value}</p>
+                    <p className="text-2xl font-bold text-foreground">{stat.value}</p>
                   </div>
-                  <stat.icon className={`h-8 w-8 ${stat.color}`} />
+                  <div className={`p-3 rounded-xl bg-gradient-to-br ${stat.color === 'text-food-green' ? 'from-green-100 to-green-200' : stat.color === 'text-primary' ? 'from-primary/10 to-primary/20' : stat.color === 'text-secondary' ? 'from-secondary/10 to-secondary/20' : 'from-yellow-100 to-yellow-200'}`}>
+                    <stat.icon className={`h-8 w-8 ${stat.color}`} />
+                  </div>
                 </div>
                 <div className="mt-4 flex items-center text-sm">
                   <span className="text-food-green font-medium">{stat.change}</span>
@@ -165,17 +167,17 @@ export default function AdminDashboard() {
 
         {/* Main Content Tabs */}
         <Tabs defaultValue="orders" className="space-y-6">
-          <TabsList>
-            <TabsTrigger value="orders">Orders</TabsTrigger>
-            <TabsTrigger value="menu">Menu Management</TabsTrigger>
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
+          <TabsList className="bg-muted/30 p-1 rounded-xl">
+            <TabsTrigger value="orders" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-soft">Orders</TabsTrigger>
+            <TabsTrigger value="menu" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-soft">Menu Management</TabsTrigger>
+            <TabsTrigger value="analytics" className="rounded-lg data-[state=active]:bg-white data-[state=active]:shadow-soft">Analytics</TabsTrigger>
           </TabsList>
 
           {/* Orders Tab */}
           <TabsContent value="orders">
-            <Card>
+            <Card className="bg-white/95 backdrop-blur-md border-border/50 shadow-soft rounded-2xl">
               <CardHeader>
-                <CardTitle>Recent Orders</CardTitle>
+                <CardTitle className="text-foreground">Recent Orders</CardTitle>
                 <CardDescription>Manage incoming orders and update their status</CardDescription>
               </CardHeader>
               <CardContent>
@@ -183,26 +185,26 @@ export default function AdminDashboard() {
                   {recentOrders.map((order) => (
                     <div 
                       key={order.id}
-                      className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 cursor-pointer transition-colors"
+                      className="flex items-center justify-between p-4 border border-border/50 rounded-xl hover:bg-accent/30 cursor-pointer transition-all duration-300 hover:shadow-soft"
                       onClick={() => setSelectedOrder(selectedOrder === order.id ? null : order.id)}
                     >
                       <div className="flex items-center space-x-4">
                         <div className="space-y-1">
-                          <p className="font-medium">{order.id}</p>
+                          <p className="font-medium text-foreground">{order.id}</p>
                           <p className="text-sm text-muted-foreground">{order.customerName}</p>
                         </div>
                         <div className="space-y-1">
-                          <p className="text-sm">{order.items}</p>
+                          <p className="text-sm text-foreground">{order.items}</p>
                           <p className="text-sm text-muted-foreground">{order.time}</p>
                         </div>
                       </div>
                       
                       <div className="flex items-center space-x-4">
                         <div className="text-right">
-                          <p className="font-semibold">${order.total.toFixed(2)}</p>
+                          <p className="font-semibold text-foreground">${order.total.toFixed(2)}</p>
                           <Badge 
                             variant="secondary" 
-                            className={`${getStatusColor(order.status)} text-white`}
+                            className={`${getStatusColor(order.status)} text-white rounded-full px-3 py-1`}
                           >
                             <span className="flex items-center gap-1">
                               {getStatusIcon(order.status)}
@@ -223,9 +225,9 @@ export default function AdminDashboard() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Menu Items List */}
               <div className="lg:col-span-2">
-                <Card>
+                <Card className="bg-white/95 backdrop-blur-md border-border/50 shadow-soft rounded-2xl">
                   <CardHeader>
-                    <CardTitle>Menu Items</CardTitle>
+                    <CardTitle className="text-foreground">Menu Items</CardTitle>
                     <CardDescription>Manage your restaurant menu</CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -233,12 +235,12 @@ export default function AdminDashboard() {
                       {menuItems.map((item) => (
                         <div 
                           key={item.id}
-                          className="flex items-center justify-between p-4 border rounded-lg"
+                          className="flex items-center justify-between p-4 border border-border/50 rounded-xl hover:bg-accent/30 transition-all duration-300"
                         >
                           <div className="space-y-1">
                             <div className="flex items-center gap-2">
-                              <h3 className="font-medium">{item.name}</h3>
-                              <Badge variant={item.isAvailable ? "default" : "secondary"}>
+                              <h3 className="font-medium text-foreground">{item.name}</h3>
+                              <Badge variant={item.isAvailable ? "default" : "secondary"} className="rounded-full">
                                 {item.isAvailable ? "Available" : "Unavailable"}
                               </Badge>
                             </div>
@@ -250,10 +252,10 @@ export default function AdminDashboard() {
                           </div>
                           
                           <div className="flex items-center gap-2">
-                            <Button variant="ghost" size="sm">
+                            <Button variant="ghost" size="sm" className="hover:bg-accent rounded-xl">
                               <Edit className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="text-destructive">
+                            <Button variant="ghost" size="sm" className="text-destructive hover:bg-destructive/10 rounded-xl">
                               <Trash2 className="h-4 w-4" />
                             </Button>
                           </div>
@@ -266,9 +268,9 @@ export default function AdminDashboard() {
 
               {/* Add/Edit Form */}
               <div>
-                <Card>
+                <Card className="bg-white/95 backdrop-blur-md border-border/50 shadow-soft rounded-2xl">
                   <CardHeader>
-                    <CardTitle>Add New Item</CardTitle>
+                    <CardTitle className="text-foreground">Add New Item</CardTitle>
                     <CardDescription>Add a new item to your menu</CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-4">
@@ -301,7 +303,7 @@ export default function AdminDashboard() {
                       <Input id="item-category" placeholder="Enter category" />
                     </div>
                     
-                    <Button className="w-full">
+                    <Button className="w-full bg-primary hover:bg-primary/90 text-white rounded-xl shadow-soft hover:shadow-food transition-all duration-300">
                       Add Item
                     </Button>
                   </CardContent>
@@ -313,36 +315,36 @@ export default function AdminDashboard() {
           {/* Analytics Tab */}
           <TabsContent value="analytics">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
+              <Card className="bg-white/95 backdrop-blur-md border-border/50 shadow-soft rounded-2xl">
                 <CardHeader>
-                  <CardTitle>Sales Overview</CardTitle>
+                  <CardTitle className="text-foreground">Sales Overview</CardTitle>
                   <CardDescription>Revenue trends over time</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <div className="h-64 flex items-center justify-center text-muted-foreground">
+                  <div className="h-64 flex items-center justify-center text-muted-foreground bg-muted/20 rounded-xl">
                     Chart placeholder - Analytics will be implemented with real data
                   </div>
                 </CardContent>
               </Card>
               
-              <Card>
+              <Card className="bg-white/95 backdrop-blur-md border-border/50 shadow-soft rounded-2xl">
                 <CardHeader>
-                  <CardTitle>Popular Items</CardTitle>
+                  <CardTitle className="text-foreground">Popular Items</CardTitle>
                   <CardDescription>Best performing menu items</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <span>Classic Burger</span>
-                      <span className="font-semibold">127 orders</span>
+                    <div className="flex items-center justify-between p-3 bg-muted/20 rounded-xl">
+                      <span className="text-foreground">Classic Burger</span>
+                      <span className="font-semibold text-primary">127 orders</span>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span>Margherita Pizza</span>
-                      <span className="font-semibold">98 orders</span>
+                    <div className="flex items-center justify-between p-3 bg-muted/20 rounded-xl">
+                      <span className="text-foreground">Margherita Pizza</span>
+                      <span className="font-semibold text-primary">98 orders</span>
                     </div>
-                    <div className="flex items-center justify-between">
-                      <span>Caesar Salad</span>
-                      <span className="font-semibold">76 orders</span>
+                    <div className="flex items-center justify-between p-3 bg-muted/20 rounded-xl">
+                      <span className="text-foreground">Caesar Salad</span>
+                      <span className="font-semibold text-primary">76 orders</span>
                     </div>
                   </div>
                 </CardContent>

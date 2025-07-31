@@ -1,8 +1,9 @@
 import { Hero } from "@/components/Hero";
 import { RestaurantCard } from "@/components/RestaurantCard";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Star } from "lucide-react";
+import { ArrowRight, Star, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import restaurantImage from "@/assets/restaurant-1.jpg";
 
 const featuredRestaurants = [
@@ -45,22 +46,118 @@ const featuredRestaurants = [
     deliveryTime: "15-25 min",
     deliveryFee: 1.49,
     isOpen: true
+  },
+  {
+    id: "5",
+    name: "Golden Dragon",
+    image: restaurantImage,
+    cuisine: "Chinese",
+    rating: 4.3,
+    deliveryTime: "35-45 min",
+    deliveryFee: 2.49,
+    isOpen: true
+  },
+  {
+    id: "6",
+    name: "Spice Garden",
+    image: restaurantImage,
+    cuisine: "Indian",
+    rating: 4.8,
+    deliveryTime: "40-50 min",
+    deliveryFee: 3.49,
+    isOpen: true
+  },
+  {
+    id: "7",
+    name: "Le Bistro",
+    image: restaurantImage,
+    cuisine: "French",
+    rating: 4.9,
+    deliveryTime: "45-55 min",
+    deliveryFee: 4.99,
+    isOpen: false
+  },
+  {
+    id: "8",
+    name: "Thai Delight",
+    image: restaurantImage,
+    cuisine: "Thai",
+    rating: 4.2,
+    deliveryTime: "30-40 min",
+    deliveryFee: 2.99,
+    isOpen: true
+  },
+  {
+    id: "9",
+    name: "Mediterranean Grill",
+    image: restaurantImage,
+    cuisine: "Mediterranean",
+    rating: 4.6,
+    deliveryTime: "25-35 min",
+    deliveryFee: 2.79,
+    isOpen: true
+  },
+  {
+    id: "10",
+    name: "BBQ House",
+    image: restaurantImage,
+    cuisine: "BBQ",
+    rating: 4.4,
+    deliveryTime: "50-60 min",
+    deliveryFee: 1.99,
+    isOpen: true
+  },
+  {
+    id: "11",
+    name: "Vegan Paradise",
+    image: restaurantImage,
+    cuisine: "Vegan",
+    rating: 4.7,
+    deliveryTime: "20-30 min",
+    deliveryFee: 2.49,
+    isOpen: true
+  },
+  {
+    id: "12",
+    name: "Seafood Harbor",
+    image: restaurantImage,
+    cuisine: "Seafood",
+    rating: 4.5,
+    deliveryTime: "35-45 min",
+    deliveryFee: 3.99,
+    isOpen: false
   }
 ];
 
 const categories = [
-  { name: "Burgers", emoji: "🍔" },
-  { name: "Pizza", emoji: "🍕" },
-  { name: "Sushi", emoji: "🍣" },
+  { name: "American", emoji: "🍔" },
+  { name: "Italian", emoji: "🍕" },
+  { name: "Japanese", emoji: "🍣" },
   { name: "Mexican", emoji: "🌮" },
   { name: "Chinese", emoji: "🥡" },
   { name: "Indian", emoji: "🍛" },
-  { name: "Desserts", emoji: "🍰" },
-  { name: "Healthy", emoji: "🥗" }
+  { name: "Thai", emoji: "🍜" },
+  { name: "French", emoji: "🥐" },
+  { name: "BBQ", emoji: "🍖" },
+  { name: "Seafood", emoji: "🦐" },
+  { name: "Vegan", emoji: "🥬" },
+  { name: "Mediterranean", emoji: "🥙" }
 ];
 
 export default function Home() {
   const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // Filter restaurants based on selected category
+  const filteredRestaurants = selectedCategory 
+    ? featuredRestaurants.filter(restaurant => 
+        restaurant.cuisine.toLowerCase() === selectedCategory.toLowerCase()
+      )
+    : featuredRestaurants;
+
+  const handleCategoryClick = (categoryName: string) => {
+    setSelectedCategory(selectedCategory === categoryName ? null : categoryName);
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -125,21 +222,30 @@ export default function Home() {
             Browse by Category
           </h2>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-            {categories.map((category) => (
-              <div 
-                key={category.name}
-                className="flex flex-col items-center p-6 bg-white rounded-3xl shadow-soft hover:shadow-food cursor-pointer group transition-all duration-300 hover:-translate-y-2 border border-border/30"
-              >
-                <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                  {category.emoji}
-                </div>
-                <span className="text-sm font-medium text-center group-hover:text-primary transition-colors">
-                  {category.name}
-                </span>
-              </div>
-            ))}
-          </div>
+                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-8 gap-4">
+             {categories.map((category) => (
+               <div 
+                 key={category.name}
+                 onClick={() => handleCategoryClick(category.name)}
+                 className={`flex flex-col items-center p-6 bg-white rounded-3xl shadow-soft hover:shadow-food cursor-pointer group transition-all duration-300 hover:-translate-y-2 border border-border/30 ${
+                   selectedCategory === category.name 
+                     ? 'ring-2 ring-primary shadow-food bg-primary/5' 
+                     : ''
+                 }`}
+               >
+                 <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
+                   {category.emoji}
+                 </div>
+                 <span className={`text-sm font-medium text-center transition-colors ${
+                   selectedCategory === category.name 
+                     ? 'text-primary font-semibold' 
+                     : 'group-hover:text-primary'
+                 }`}>
+                   {category.name}
+                 </span>
+               </div>
+             ))}
+           </div>
         </div>
       </section>
 
@@ -149,26 +255,59 @@ export default function Home() {
           <div className="flex items-center justify-between mb-12">
             <div>
               <h2 className="text-4xl font-bold text-foreground">
-                Featured Restaurants
+                {selectedCategory ? `${selectedCategory} Restaurants` : 'Featured Restaurants'}
               </h2>
               <p className="text-muted-foreground mt-2">
-                Discover the best restaurants in your area
+                {selectedCategory 
+                  ? `Discover the best ${selectedCategory.toLowerCase()} restaurants in your area`
+                  : 'Discover the best restaurants in your area'
+                }
               </p>
             </div>
-            <Button variant="outline" className="group border-primary text-primary hover:bg-primary hover:text-white rounded-xl">
-              View All
-              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-            </Button>
+            <div className="flex items-center gap-3">
+              {selectedCategory && (
+                <Button 
+                  variant="outline" 
+                  onClick={() => setSelectedCategory(null)}
+                  className="group border-primary text-primary hover:bg-primary hover:text-white rounded-xl"
+                >
+                  <X className="mr-2 h-4 w-4" />
+                  Clear Filter
+                </Button>
+              )}
+              <Button variant="outline" className="group border-primary text-primary hover:bg-primary hover:text-white rounded-xl">
+                View All
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredRestaurants.map((restaurant) => (
-              <RestaurantCard 
-                key={restaurant.id}
-                {...restaurant}
-                onClick={() => navigate(`/restaurant/${restaurant.id}`)}
-              />
-            ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {filteredRestaurants.length > 0 ? (
+              filteredRestaurants.map((restaurant) => (
+                <RestaurantCard 
+                  key={restaurant.id}
+                  {...restaurant}
+                  onClick={() => navigate(`/restaurant/${restaurant.id}`)}
+                />
+              ))
+            ) : (
+              <div className="col-span-full text-center py-12">
+                <div className="text-6xl mb-4">🍽️</div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">
+                  No {selectedCategory} restaurants found
+                </h3>
+                <p className="text-muted-foreground mb-4">
+                  Try selecting a different category or check back later
+                </p>
+                <Button 
+                  onClick={() => setSelectedCategory(null)}
+                  className="bg-primary hover:bg-primary/90 text-white rounded-xl"
+                >
+                  View All Restaurants
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </section>
